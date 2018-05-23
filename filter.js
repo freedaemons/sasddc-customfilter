@@ -24,23 +24,23 @@ function updateData(casData) {
 	var findParents = new Array();
 	var findChildren = new Array();
 	//Replicate the parent OR child parameterized filter in VA
-	// for (p = 0; p < casData.data.length; p++) {
- //        if (casData.data[p][1] == company) {
- //            result.push({
- //                row: p
- //            });
- //        }
- //        if (casData.data[p][5] == company) {
- //            result.push({
- //                row: p
- //            });
- //        }
- //    };
- 	for (p = 0; p < casData.data.length; p++) { // push everything
+	for (p = 0; p < casData.data.length; p++) {
+        if (String(casData.data[p][1]).toUpperCase().includes(company).toUpperCase()) {
             result.push({
-                row: p 
-            })
-    }
+                row: p
+            });
+        }
+        if (String(casData.data[p][5]).toUpperCase().includes(company).toUpperCase()) {
+            result.push({
+                row: p
+            });
+        }
+    };
+ 	// for (p = 0; p < casData.data.length; p++) { // push everything
+  //           result.push({
+  //               row: p 
+  //           })
+  //   }
     
     // result.push({
     // 	row: 2 // simulate filter result only containing 3rd row
