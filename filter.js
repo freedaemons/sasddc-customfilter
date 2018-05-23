@@ -47,7 +47,12 @@ function updateData(casData) {
     result.push({
     	row: 2 // simulate filter result only containing 3rd row
     })
-
+    result.push({
+        row: 3 // one more
+    })
+        result.push({
+        row: 4 // one more
+    })
     self.resultName = casData.resultName;
     var message = {
         selections: result,
