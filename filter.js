@@ -36,23 +36,15 @@ function updateData(casData) {
  //            });
  //        }
  //    };
- 	// for (p = 0; p < casData.data.length; p++) {
-  //       if (p%5 == 0){ // simulate result containing every 5th row
-  //       	result.push({
-  //       		row: p
-  //       	})
-  //       }
-  //       }
-  //   };
-    result.push({
-    	row: 2 // simulate filter result only containing 3rd row
-    })
-    result.push({
-        row: 3 // one more
-    })
-        result.push({
-        row: 4 // one more
-    })
+ 	for (p = 0; p < casData.data.length; p++) { // push everything
+            result.push({
+                row: p 
+            })
+    }
+    
+    // result.push({
+    // 	row: 2 // simulate filter result only containing 3rd row
+    // })
     self.resultName = casData.resultName;
     var message = {
         selections: result,
