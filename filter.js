@@ -16,21 +16,33 @@ function updateData(chartData) {
 	var company = document.getElementById("company").value,
 		levels = document.getElementById("levels").value
 
-	var temp = [];
-    // for (p = 0; p < chartData.data.length; p++) {
-    //     if (chartData.data[p][0] == legendOptions[x]) {
-    //         temp.push({
-    //             row: p
-    //         });
-    //     }
-    // };
-    temp.push({
-    	row: 2 // simulate filter result only containing 3rd row
-    })
+		if (Number.isInteger(levels) !== true){
+			levels = 1
+		}
+
+	var result = [];
+	var findParents = new Array();
+	var findChildren = new Array();
+	//Replicate the parent OR child parameterized filter in VA
+	for (p = 0; p < chartData.data.length; p++) {
+        if (chartData.data[p][1] == company) {
+            result.push({
+                row: p
+            });
+        }
+        if (chartData.data[p][5] == company) {
+            result.push({
+                row: p
+            });
+        }
+    };
+    // result.push({
+    // 	row: 2 // simulate filter result only containing 3rd row
+    // })
 
     self.resultName = chartData.resultName;
     var message = {
-        selections: temp,
+        selections: result,
         resultName: self.resultName
     };
 
