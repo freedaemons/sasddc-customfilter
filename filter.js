@@ -1,19 +1,28 @@
+//store event data for future triggers of updateData
+var datatable;
+document.getElementById("company").addEventListener('change', onInputChange);
+document.getElementById("levels").addEventListener('change', onInputChange);
+// var autofill_list = ['Apple', 'Banana', 'Coffee', 'Dog', 'Elephant']
+// autocomplete(document.getElementById("company"), autofill_list);
+
 // Create event listener which takes data from VA
 function onMessage(evt) {
     if (evt && evt.data && evt.data.hasOwnProperty("data"))
+        datatable = evt.data;
         updateData(evt.data);
+    }
+
+    if (window.addEventListener) {
+        // For standards-compliant web browsers 
+        window.addEventListener("message", onMessage, false);
+    } else {
+        // For Internet Explorer 8 and earlier versions
+        window.attachEvent("onmessage", onMessage);
 }
 
-if (window.addEventListener) {
-    // For standards-compliant web browsers 
-    window.addEventListener("message", onMessage, false);
-} else {
-    // For Internet Explorer 8 and earlier versions
-    window.attachEvent("onmessage", onMessage);
+function onInputChange(){
+    updateData(datatable);
 }
-
-// var autofill_list = ['Apple', 'Banana', 'Coffee', 'Dog', 'Elephant']
-// autocomplete(document.getElementById("company"), autofill_list);
 
 function updateData(casData) {
     //casData.data contains rows of data, each column corresponding to the variables assigned in 'Data Roles' of the Data-driven Container, in the order listed
@@ -48,7 +57,9 @@ function updateData(casData) {
                     row: p
                 })
                 findParents.push(casData.data[p][1]);
+                console.log('>>> pushing ' + casData.data[p][1] + ' to findParents');
                 findChildren.push(company);
+                console.log('>>> pushing ' + company + ' to findChildren');
             }
         }
         //find children
@@ -59,6 +70,7 @@ function updateData(casData) {
                         row: p
                     })
                     findChildren.push(casData.data[p][0]);
+                    console.log('>>> pushing ' + casData.data[p][0] + ' to findParents');
                 }
             }
         }
@@ -70,6 +82,7 @@ function updateData(casData) {
                         row: p
                     })
                     findParents.push(casData.data[p][1]);
+                    console.log('>>> pushing ' + casData.data[p][1] + ' to findParents');
                 }
             }
         }
