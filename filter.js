@@ -23,8 +23,11 @@ function updateData(casData) {
 		if (Number.isInteger(levels) !== true){
 			levels = 1
 		}
-
-    var autofill_companies = casData.data.map(function(value,index) { return value[0]; }); // get the first column to use as autofill
+    // get the first column to use as autofill
+    var autofill_companies =  [];
+    for (p = 0; p < casData.data.length; p++){
+        autofill_companies.push(casData.data[p][0]);
+    }
     autocomplete(document.getElementById("company"), autofill_companies);
     //result seems to need to be an array of dictionaries, each specifying the index of a row of the data that should be output.
     //indices of data are messy, i.e. they may not be in the order you loaded them into SAS, so you need to verify that you have the correct row 
