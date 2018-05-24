@@ -3,7 +3,6 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <title>DDC Custom Filter</title>
-	<script src="filter.js"></script>
 	<style>
 		body {
 		  overflow: hidden;
@@ -15,6 +14,33 @@
 		.content{
 			width: 100%;
 		}
+
+		.autocomplete-items {
+			position: inherit;
+			border: 1px solid #d4d4d4;
+			border-bottom: none;
+			border-top: none;
+			z-index: 99;
+			/*position the autocomplete items to be the same width as the container:*/
+			top: 100%;
+			left: 0;
+			right: 0;
+		}
+		.autocomplete-items div {
+			padding: 10px;
+			cursor: pointer;
+			background-color: #fff; 
+			border-bottom: 1px solid #d4d4d4; 
+		}
+		.autocomplete-items div:hover {
+			/*when hovering an item:*/
+			background-color: #e9e9e9; 
+			}
+		.autocomplete-active {
+			/*when navigating through the items using the arrow keys:*/
+			background-color: DodgerBlue !important; 
+			color: #ffffff; 
+		}
 	</style>
   </head>
   <body>
@@ -23,9 +49,10 @@
 			<form action='' method='post' style='width:100%;;padding:3px'>
 				<input size='' style='width:45%' placeholder='Company Name' id='company'/>
 				<input size='' style='width:45%' type="number" min="1" step="1" placeholder='Levels' id='levels'/>
-<!-- 				<input type='submit' value='Search' onclick="filter();"> -->
+<!-- 				<input type='submit' value='Search' onclick="filter();"> -->	
 			</form>
 		</span>
     </div>
+  <script src="filter.js"></script>
   </body>
 </html>
