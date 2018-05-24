@@ -57,9 +57,9 @@ function updateData(casData) {
                     row: p
                 })
                 findParents.push(casData.data[p][1]);
-                console.log('>>> pushing ' + casData.data[p][1] + ' to findParents');
+                console.log('>>> searchterm: pushing ' + casData.data[p][1] + ' to findParents');
                 findChildren.push(company);
-                console.log('>>> pushing ' + company + ' to findChildren');
+                console.log('>>> searchterm: pushing ' + company + ' to findChildren');
             }
         }
         //find children
@@ -70,7 +70,7 @@ function updateData(casData) {
                         row: p
                     })
                     findChildren.push(casData.data[p][0]);
-                    console.log('>>> pushing ' + casData.data[p][0] + ' to findParents');
+                    console.log('>>> findChild: pushing ' + casData.data[p][0] + ' to findParents');
                 }
             }
         }
@@ -82,7 +82,7 @@ function updateData(casData) {
                         row: p
                     })
                     findParents.push(casData.data[p][1]);
-                    console.log('>>> pushing ' + casData.data[p][1] + ' to findParents');
+                    console.log('>>> findParent pushing ' + casData.data[p][1] + ' to findParents');
                 }
             }
         }
@@ -99,43 +99,6 @@ function updateData(casData) {
         return !this[a.row] && (this[a.row] = true);
     }, Object.create(null));
 
-	//Replicate the parent OR child parameterized filter in VA
-	// for (p = 0; p < casData.data.length; p++) {
- //        if (String(casData.data[p][1]).toUpperCase().includes(company).toUpperCase()) {
- //            result.push({
- //                row: p
- //            });
- //        }
- //        if (String(casData.data[p][5]).toUpperCase().includes(company).toUpperCase()) {
- //            result.push({
- //                row: p
- //            });
- //        }
- //    };
- 	// for (p = 0; p < casData.data.length; p++) { // push everything
-  //           result.push({
-  //               row: p 
-  //           })
-  //   }
-    
-    // result.push({
-    // 	row: 2 // simulate filter result only containing 3rd row
-    // })
-    console.log('--- filter debugging begins ---\n')
-    console.log(String(casData.data[0][0]))
-    console.log(String(casData.data[0][1]))
-
-    console.log(String(casData.data[1][0]))
-    console.log(String(casData.data[1][1]))
-
-    console.log(String(casData.data[2][0]))
-    console.log(String(casData.data[2][1]))
-
-    console.log(Object.prototype.toString.call(casData))
-    console.log(Object.prototype.toString.call(casData.data))
-    console.log(Object.prototype.toString.call(casData.data[2]))
-    console.log(Object.prototype.toString.call(result[0]))
-    console.log('--- filter debugging ends ---\n')
 
     self.resultName = casData.resultName;
     var message = {
