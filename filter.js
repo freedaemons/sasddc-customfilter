@@ -70,7 +70,7 @@ function updateData(casData) {
                         row: p
                     })
                     findChildren.push(casData.data[p][0]);
-                    console.log('>>> findChild: pushing ' + casData.data[p][0] + ' to findParents');
+                    console.log('>>> findChild: pushing ' + casData.data[p][0] + ' to findChildren');
                 }
             }
         }
