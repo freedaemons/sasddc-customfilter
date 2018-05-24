@@ -12,8 +12,8 @@ if (window.addEventListener) {
     window.attachEvent("onmessage", onMessage);
 }
 
-var autofill_list = ['Apple', 'Banana', 'Coffee', 'Dog', 'Elephant']
-autocomplete(document.getElementById("company"), autofill_list);
+// var autofill_list = ['Apple', 'Banana', 'Coffee', 'Dog', 'Elephant']
+// autocomplete(document.getElementById("company"), autofill_list);
 
 function updateData(casData) {
     //casData.data contains rows of data, each column corresponding to the variables assigned in 'Data Roles' of the Data-driven Container, in the order listed
@@ -24,7 +24,7 @@ function updateData(casData) {
 			levels = 1
 		}
 
-    var autofill_companies = casData.map(function(value,index) { return value[0]; }); // get the first column to use as autofill
+    var autofill_companies = casData.data.map(function(value,index) { return value[0]; }); // get the first column to use as autofill
     autocomplete(document.getElementById("company"), autofill_companies);
     //result seems to need to be an array of dictionaries, each specifying the index of a row of the data that should be output.
     //indices of data are messy, i.e. they may not be in the order you loaded them into SAS, so you need to verify that you have the correct row 
