@@ -30,8 +30,59 @@ function updateData(casData) {
     //indices of data are messy, i.e. they may not be in the order you loaded them into SAS, so you need to verify that you have the correct row 
     //before pushing it in.
 	var result = [];
-	var findParents = new Array();
-	var findChildren = new Array();
+	var findParents = new Array(); //contains names of parents of previous children
+	var findChildren = new Array(); //contains names of previous children, whose parents need to be found
+    var levelcounter = parseInt(levels);
+    if (levelcounter < 1){
+        levelcounter = 1;
+    }
+    //push all the rows with children that correspond to nodes with the specified degrees of separation to the searched node
+    while(levelcounter > 0){
+        for (p = 0; p < casData.data.length; p++){
+            //add the searched company to results
+            if (String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
+                result.push({
+                    row: p
+                })
+                findParents.push(casData.data[p][1]);
+                findChildren.push(company);
+            }
+        }
+        //find children
+        for(i = 0; i < findChildren.length; i++){
+            for (p = 0; p < casData.data.length; p++){
+                if (String(casData.data[p][1]).toUpperCase() === findChildren[i].toUpperCase()){
+                    result.push({
+                        row: p
+                    })
+                    findChildren.push(casData.data[p][0]);
+                }
+            }
+        }
+        //find parents
+        for(i = 0; i < findParents.length; i++){
+            for (p = 0; p < casData.data.length; p++){
+                if (String(casData.data[p][0]).toUpperCase() === findParents[i].toUpperCase()){
+                    result.push({
+                        row: p
+                    })
+                    findParents.push(casData.data[p][1]);
+                }
+            }
+        }
+
+        levelcounter-= 1;
+    }
+    if (result.length == 0){
+        result.push({
+            row: 2 // debugging mode - empty result fails to filter and displays all for some unknown reason
+        })
+    }
+    //remove duplicates from results
+    uniqresult = array.filter(function (a) {
+        return !this[a.row] && (this[a.row] = true);
+    }, Object.create(null));
+
 	//Replicate the parent OR child parameterized filter in VA
 	// for (p = 0; p < casData.data.length; p++) {
  //        if (String(casData.data[p][1]).toUpperCase().includes(company).toUpperCase()) {
@@ -51,24 +102,18 @@ function updateData(casData) {
   //           })
   //   }
     
-    result.push({
-    	row: 2 // simulate filter result only containing 3rd row
-    })
+    // result.push({
+    // 	row: 2 // simulate filter result only containing 3rd row
+    // })
     console.log('--- filter debugging begins ---\n')
     console.log(String(casData.data[0][0]))
     console.log(String(casData.data[0][1]))
-    console.log(String(casData.data[0][2]))
-    console.log(String(casData.data[0][3]))
 
     console.log(String(casData.data[1][0]))
     console.log(String(casData.data[1][1]))
-    console.log(String(casData.data[1][2]))
-    console.log(String(casData.data[1][3]))
 
     console.log(String(casData.data[2][0]))
     console.log(String(casData.data[2][1]))
-    console.log(String(casData.data[2][2]))
-    console.log(String(casData.data[2][3]))
 
     console.log(Object.prototype.toString.call(casData))
     console.log(Object.prototype.toString.call(casData.data))
@@ -78,7 +123,7 @@ function updateData(casData) {
 
     self.resultName = casData.resultName;
     var message = {
-        selections: result,
+        selections: uniqresult,
         resultName: self.resultName
     };
 
