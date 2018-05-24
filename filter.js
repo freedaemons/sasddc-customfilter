@@ -13,6 +13,7 @@ if (window.addEventListener) {
 }
 
 function updateData(casData) {
+    //casData.data contains rows of data, each column corresponding to the variables assigned in 'Data Roles' of the Data-driven Container, in the order listed
 	var company = document.getElementById("company").value,
 		levels = document.getElementById("levels").value
 
@@ -20,6 +21,9 @@ function updateData(casData) {
 			levels = 1
 		}
 
+    //result seems to need to be an array of dictionaries, each specifying the index of a row of the data that should be output.
+    //indices of data are messy, i.e. they may not be in the order you loaded them into SAS, so you need to verify that you have the correct row 
+    //before pushing it in.
 	var result = [];
 	var findParents = new Array();
 	var findChildren = new Array();
@@ -60,6 +64,11 @@ function updateData(casData) {
     console.log(String(casData.data[2][1]))
     console.log(String(casData.data[2][2]))
     console.log(String(casData.data[2][3]))
+
+    console.log(Object.prototype.toString.call(casData);)
+    console.log(Object.prototype.toString.call(casData.data);)
+    console.log(Object.prototype.toString.call(casData.data[2]);)
+    console.log(Object.prototype.toString.call(result[0]);)
     console.log('--- filter debugging ends ---\n')
 
     self.resultName = casData.resultName;
