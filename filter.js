@@ -82,7 +82,7 @@ function updateData(casData) {
         })
     }
     //remove duplicates from results
-    uniqresult = array.filter(function (a) {
+    uniqresult = result.filter(function (a) {
         return !this[a.row] && (this[a.row] = true);
     }, Object.create(null));
 
