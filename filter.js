@@ -37,9 +37,9 @@ function updateData(casData) {
     for (p = 0; p < casData.data.length; p++){
         autofill_companies.push(casData.data[p][0]);
     }
-    // autofill_companies = autofill_companies.filter(function (a) {
-    //     return !this[a.row] && (this[a.row] = true);
-    //     }, Object.create(null)); //remove duplicates, just in case
+    autofill_companies = autofill_companies.filter(function (a) {
+        return !this[a.row] && (this[a.row] = true);
+        }, Object.create(null)); //remove duplicates, just in case
 
     autocomplete(document.getElementById("company"), autofill_companies);
     //result seems to need to be an array of dictionaries, each specifying the index of a row of the data that should be output.
