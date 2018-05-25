@@ -37,9 +37,10 @@ function updateData(casData) {
     for (p = 0; p < casData.data.length; p++){
         autofill_companies.push(casData.data[p][0]);
     }
-    autofill_companies = autofill_companies.filter(function (a) {
-        return !this[a.row] && (this[a.row] = true);
-        }, Object.create(null)); //remove duplicates, just in case
+    console.log('>>>autocomplete list generated: ' + autofill_companies.length + ' items.')
+    // autofill_companies = autofill_companies.filter(function (a) {
+    //     return !this[a.row] && (this[a.row] = true);
+    //     }, Object.create(null)); //remove duplicates, just in case
 
     autocomplete(document.getElementById("company"), autofill_companies);
     //result seems to need to be an array of dictionaries, each specifying the index of a row of the data that should be output.
@@ -54,6 +55,8 @@ function updateData(casData) {
         levelcounter = 1;
     }
     //find the search term node
+    console.log('Levels requested: ' + levelcounter)
+    console.log('>>>Begin searching for search term.')
     for (p = 0; p < casData.data.length; p++){
         //add the searched company to results
         if (toDisplay.indexOf(String(casData.data[p][0]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
