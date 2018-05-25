@@ -37,6 +37,10 @@ function updateData(casData) {
     for (p = 0; p < casData.data.length; p++){
         autofill_companies.push(casData.data[p][0]);
     }
+    autofill_companies = autofill_companies.filter(function (a) {
+        return !this[a.row] && (this[a.row] = true);
+        }, Object.create(null)); //remove duplicates, just in case
+
     autocomplete(document.getElementById("company"), autofill_companies);
     //result seems to need to be an array of dictionaries, each specifying the index of a row of the data that should be output.
     //indices of data are messy, i.e. they may not be in the order you loaded them into SAS, so you need to verify that you have the correct row 
@@ -44,6 +48,7 @@ function updateData(casData) {
 	var result = [];
 	var findParents = new Array(); //contains names of parents of previous children
 	var findChildren = new Array(); //contains names of previous children, whose parents need to be found
+    var toDisplay = newArray();
     var levelcounter = parseInt(levels);
     if (levelcounter < 1){
         levelcounter = 1;
@@ -56,6 +61,7 @@ function updateData(casData) {
                 result.push({
                     row: p
                 })
+                toDisplay.push(casData.data[p][0].toUpperCase())
                 findParents.push(casData.data[p][1]);
                 console.log('>>> searchterm: pushing ' + casData.data[p][1] + ' to findParents');
                 findChildren.push(company);
@@ -63,21 +69,23 @@ function updateData(casData) {
             }
         }
         //find children
-        for(i = 0; i < findChildren.length; i++){
+        while(findChildren.length > 0){
+            nextChild = findChildren.pop()
             for (p = 0; p < casData.data.length; p++){
-                if (String(casData.data[p][1]).toUpperCase() === findChildren[i].toUpperCase()){
+                if (toDisplay.indexOf(String(casData.data[p][1]).toUpperCase() < 0) && String(casData.data[p][1]).toUpperCase() === nextChild.toUpperCase()){
                     result.push({
                         row: p
                     })
+                    toDisplay.push(casData.data[p][0].toUpperCase())
                     findChildren.push(casData.data[p][0]);
                     console.log('>>> findChild: pushing ' + casData.data[p][0] + ' to findChildren');
                 }
             }
         }
         //find parents
-        for(i = 0; i < findParents.length; i++){
+        while findParents.length > 0){
             for (p = 0; p < casData.data.length; p++){
-                if (String(casData.data[p][0]).toUpperCase() === findParents[i].toUpperCase()){
+                if (toDisplay.indexOf(String(casData.data[p][1]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === findParents[i].toUpperCase()){
                     result.push({
                         row: p
                     })
