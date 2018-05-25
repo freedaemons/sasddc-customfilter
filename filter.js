@@ -54,21 +54,21 @@ function updateData(casData) {
         levelcounter = 1;
     }
     //push all the rows with children that correspond to nodes with the specified degrees of separation to the searched node
-    while(levelcounter > 0){
-        for (p = 0; p < casData.data.length; p++){
-            //add the searched company to results
-            if (toDisplay.indexOf(String(casData.data[p][0]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
-                result.push({
-                    row: p
-                })
-                toDisplay.push(casData.data[p][0].toUpperCase())
-                findParents.push(casData.data[p][1]);
-                console.log('>>> searchterm: pushing ' + casData.data[p][1] + ' to findParents');
-                findChildren.push(company);
-                console.log('>>> searchterm: pushing ' + company + ' to findChildren');
-            }
-            break;
+    for (p = 0; p < casData.data.length; p++){
+        //add the searched company to results
+        if (toDisplay.indexOf(String(casData.data[p][0]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
+            result.push({
+                row: p
+            })
+            toDisplay.push(casData.data[p][0].toUpperCase())
+            findParents.push(casData.data[p][1]);
+            console.log('>>> searchterm: pushing ' + casData.data[p][1] + ' to findParents');
+            findChildren.push(company);
+            console.log('>>> searchterm: pushing ' + company + ' to findChildren');
         }
+        break;
+    }
+    while(levelcounter > 0){
         //find children
         while(findChildren.length > 0){
             nextChild = findChildren.pop()
