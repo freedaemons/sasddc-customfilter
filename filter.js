@@ -53,7 +53,7 @@ function updateData(casData) {
     if (levelcounter < 1){
         levelcounter = 1;
     }
-    //push all the rows with children that correspond to nodes with the specified degrees of separation to the searched node
+    //find the search term node
     for (p = 0; p < casData.data.length; p++){
         //add the searched company to results
         if (toDisplay.indexOf(String(casData.data[p][0]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
@@ -68,6 +68,7 @@ function updateData(casData) {
         }
         break;
     }
+    //for each level...
     while(levelcounter > 0){
         //find children
         while(findChildren.length > 0){
