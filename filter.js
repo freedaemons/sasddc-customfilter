@@ -84,8 +84,9 @@ function updateData(casData) {
         }
         //find parents
         while (findParents.length > 0){
+            nextParent = findParents.pop()
             for (p = 0; p < casData.data.length; p++){
-                if (toDisplay.indexOf(String(casData.data[p][1]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === findParents[i].toUpperCase()){
+                if (toDisplay.indexOf(String(casData.data[p][1]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === nextParent.toUpperCase()){
                     result.push({
                         row: p
                     })
