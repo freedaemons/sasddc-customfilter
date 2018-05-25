@@ -68,8 +68,8 @@ function updateData(casData) {
             console.log('>>> searchterm: pushing ' + casData.data[p][1] + ' to findParents');
             findChildren.push(company);
             console.log('>>> searchterm: pushing ' + company + ' to findChildren');
+            break;
         }
-        break;
     }
     //for each level...
     while(levelcounter > 0){
@@ -84,8 +84,8 @@ function updateData(casData) {
                     toDisplay.push(casData.data[p][0].toUpperCase())
                     findChildren.push(casData.data[p][0]);
                     console.log('>>> findChild: pushing ' + casData.data[p][0] + ' to findChildren; children left to find: ' + findChildren.length);
+                    break;
                 }
-                break;
             }
             console.log('Current level: ' + levelcounter + '; Children left to find: ' + findChildren.length)
         }
@@ -99,8 +99,8 @@ function updateData(casData) {
                     })
                     findParents.push(casData.data[p][1]);
                     console.log('>>> findParent pushing ' + casData.data[p][1] + ' to findParents; parents left to find: ' + findParents.length);
+                    break;
                 }
-                break;
             }
             console.log('Current level: ' + levelcounter + '; Parents left to find: ' + findChildren.length)
         }
