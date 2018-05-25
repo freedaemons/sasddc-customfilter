@@ -48,7 +48,7 @@ function updateData(casData) {
 	var result = [];
 	var findParents = new Array(); //contains names of parents of previous children
 	var findChildren = new Array(); //contains names of previous children, whose parents need to be found
-    var toDisplay = newArray();
+    var toDisplay = new Array();
     var levelcounter = parseInt(levels);
     if (levelcounter < 1){
         levelcounter = 1;
