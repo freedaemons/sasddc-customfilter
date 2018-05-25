@@ -83,7 +83,7 @@ function updateData(casData) {
             }
         }
         //find parents
-        while findParents.length > 0){
+        while (findParents.length > 0){
             for (p = 0; p < casData.data.length; p++){
                 if (toDisplay.indexOf(String(casData.data[p][1]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === findParents[i].toUpperCase()){
                     result.push({
