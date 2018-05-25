@@ -68,7 +68,7 @@ function updateData(casData) {
             toDisplay.push(casData.data[p][0].toUpperCase())
             console.log('>>> toDisplay: ' + casData.data[p][0])
             findParents.push(casData.data[p][1]);
-            console.log('>>> searchterm: pushing ' + casData.data[p][1] + ' to findParents');
+            console.log('>>> searchterm: pushing ' + company + ' to findParents');
             findChildren.push(company);
             console.log('>>> searchterm: pushing ' + company + ' to findChildren');
             break;
@@ -97,15 +97,26 @@ function updateData(casData) {
         //find parents
         while (findParents.length > 0){
             nextParent = findParents.pop()
-            console.log('>>> ' + nextParent + 'identified as parent node to be displayed')
+            thisParents = new Array();
+            console.log('>>> Looking for parents of ' + nextParent)
             for (p = 0; p < casData.data.length; p++){
                 if (toDisplay.indexOf(String(casData.data[p][0]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === nextParent.toUpperCase()){
-                    result.push({
+                    thisParents.push(casData.data[p][1])
+                }
+            }
+            while(thisParents.length > 0){
+                thisParent = thisParents.pop();
+                for (p = 0; p < casData.data.length; p++){
+                    if (toDisplay.indexOf(String(casData.data[p][0]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === thisParent.toUpperCase()){
+                        result.push({
                         row: p
                     })
-                    findParents.push(casData.data[p][1]);
-                    console.log('>>> findParent pushing ' + casData.data[p][1] + ' to findParents; parents left to find: ' + findParents.length);
-                    break;
+                    toDisplay.push(casData.data[p][0]);
+                    console.log('>>> toDisplay: ' + casData.data[p][0])
+                    findParents.push(casData.data[p][0]);
+                    console.log('>>> findParent pushing ' + casData.data[p][0] + ' to findParents; parents left to find: ' + findParents.length);
+                    //do not break, because all next parents to be found are identified in one passthrough
+                    }
                 }
             }
             console.log('Current level: ' + levelcounter + '; Parents left to find: ' + findChildren.length)
