@@ -51,8 +51,10 @@ function updateData(casData) {
 	var findChildren = new Array(); //contains names of previous children, whose parents need to be found
     var toDisplay = new Array();
     var levelcounter = parseInt(levels);
+    console.log('raw levelcounter: ' + levelcounter)
     if (levelcounter < 1){
         levelcounter = 1;
+        console.log('levelcounter reset to 1')
     }
     //find the search term node
     console.log('Levels requested: ' + levelcounter)
@@ -64,6 +66,7 @@ function updateData(casData) {
                 row: p
             })
             toDisplay.push(casData.data[p][0].toUpperCase())
+            console.log('>>> toDisplay: ' + casData.data[p][0])
             findParents.push(casData.data[p][1]);
             console.log('>>> searchterm: pushing ' + casData.data[p][1] + ' to findParents');
             findChildren.push(company);
@@ -76,15 +79,17 @@ function updateData(casData) {
         //find children
         while(findChildren.length > 0){
             nextChild = findChildren.pop()
+            console.log('>>> Looking for children of ' + nextChild)
             for (p = 0; p < casData.data.length; p++){
                 if (toDisplay.indexOf(String(casData.data[p][1]).toUpperCase() < 0) && String(casData.data[p][1]).toUpperCase() === nextChild.toUpperCase()){
                     result.push({
                         row: p
                     })
                     toDisplay.push(casData.data[p][0].toUpperCase())
+                    console.log('>>> toDisplay: ' + casData.data[p][0])
                     findChildren.push(casData.data[p][0]);
                     console.log('>>> findChild: pushing ' + casData.data[p][0] + ' to findChildren; children left to find: ' + findChildren.length);
-                    break;
+                    //do not break, because all children are found in one passthrough
                 }
             }
             console.log('Current level: ' + levelcounter + '; Children left to find: ' + findChildren.length)
@@ -92,6 +97,7 @@ function updateData(casData) {
         //find parents
         while (findParents.length > 0){
             nextParent = findParents.pop()
+            console.log('>>> ' + nextParent + 'identified as parent node to be displayed')
             for (p = 0; p < casData.data.length; p++){
                 if (toDisplay.indexOf(String(casData.data[p][0]).toUpperCase() < 0) && String(casData.data[p][0]).toUpperCase() === nextParent.toUpperCase()){
                     result.push({
