@@ -46,52 +46,54 @@ function updateData(casData) {
 
     /////////////////////////////////// Insert code to filter data here /////////////////////////////////////
     var result = new Array();
+    var display = new Array();
     var displayed = new Array();
     var xgParents = new Array();
+    var xgChildren = new Array();
     
     // first passthrough
     for (p=0; p < casData.data.length; p++){
         if (String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
+            //find the search term
             if(displayed.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
-                // get search term, if not already gotten
-                result.push({
-                    row: p
-                });
-                displayed.push(casData.data[p][0].toUpperCase())
-                console.log('>>> Search term row found and displayed.');
+                display.push(casData.data[p][0].toUpperCase())
+                console.log('>>> Search term row found.');
             }
-            //build list of generation-q parents to be found
+            //collect previously unseen generation-x parents of the search term
             for (q=1; q < levels; q++){
-                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase() < 0)){
+                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase() < 0x)){
                     xgParents.push(String(casData.data[p][q]).toUpperCase());
+                    console.log('>>> Gen-x parent found: ' + String(casData.data[p][q]));
                 }
             }
+        }else{
+          // if node is not search term, check if it is a generation-x child of the search term
+          for(q=1; q < levels; q++){
+            if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && display.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
+                display.push(casData.data[p][0].toUpperCase())
+                console.log('>>> Gen-q child row found: ' + casData.data[p][0].toUpperCase());
+            }
+          }
         }
     }
     console.log('>>> List of generation-q parents: ' + xgParents.length + ' items.');
-    // second passthrough
+    console.log('>>> List of generation-q children: ' + xgChildren.length + ' items.');
+
+    //second passthrough
     for (p=0; p < casData.data.length; p++){
-        //if row is in xgParents, and isn't already displayed, display it.
-        if(xgParents.indexOf(String(casData.data[p][0]).toUpperCase()) > -1 && displayed.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
+      var thisNode_str = String(casData.data[p][0]).toUpperCase();
+        // If this node is to be displayed, and has not yet been displayed, display it.
+        if(display.indexOf(thisNode_str) > -1 && displayed.indexOf(thisNode_str) < 0){
             result.push({
                 row: p
             });
-            displayed.push(casData.data[p][0].toUpperCase())
-            console.log('>>> Gen-q parent row found and displayed.');
-        }
-        //if row is a generation-q child, and isn't already displayed, display it.
-        for(q=1; q < levels; q++){
-            if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && displayed.indexOf(String(casData.data[p][q]).toUpperCase() < 0)){
-                result.push({
-                    row: p
-                });
-                displayed.push(casData.data[p][q].toUpperCase())
-                console.log('>>> Gen-q child row found and displayed.');
-            }
+            displayed.push(thisNode_str)
+            console.log('>>> Gen-q neighbour row found and displayed.');
         }
     }
-    console.log('>>> List of ' + levels + '-degrees neighbours to be displayed: ' + displayed.length + ' items.');
-
+    console.log('>>> List of ' + levels + '-degrees neighbours to be displayed: ' + display.length + ' items.');
+    console.log('>>> List of ' + levels + '-degrees neighbours attempted to be displayed: ' + displayed.length + ' items.');
+    console.log('>>> Actual length of result array: ' result.length + ' items.');
     /////////////////////////////////// End of filter ///////////////////////////////////////////////////////
     //remove duplicates from results
     uniqresult = result.filter(function (a) {
