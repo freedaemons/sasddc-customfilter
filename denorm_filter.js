@@ -27,17 +27,17 @@ function onInputChange(){
 function updateData(casData) {
     //casData.data contains rows of data, each column corresponding to the variables assigned in 'Data Roles' of the Data-driven Container, in the order listed
     var company = document.getElementById("company").value,
-        levels = document.getElementById("levels").value
+        levels = document.getElementById("levels").value;
 
         if (Number.isInteger(levels) !== true){
-            levels = 1
+            levels = 1;
         }
     // get the first column to use as autofill
     var autofill_companies =  [];
-    for (p = 0; p < casData.data.length; p++){
+    for (var p = 0; p < casData.data.length; p++){
         autofill_companies.push(casData.data[p][0]);
     }
-    console.log('>>>autocomplete list generated: ' + autofill_companies.length + ' items.')
+    console.log('>>>autocomplete list generated: ' + autofill_companies.length + ' items.');
     // autofill_companies = autofill_companies.filter(function (a) {
     //     return !this[a.row] && (this[a.row] = true);
     //     }, Object.create(null)); //remove duplicates, just in case
@@ -45,32 +45,32 @@ function updateData(casData) {
     autocomplete(document.getElementById("company"), autofill_companies);
 
     /////////////////////////////////// Insert code to filter data here /////////////////////////////////////
-    var result = new Array();
-    var display = new Array();
-    var displayed = new Array();
-    var xgParents = new Array();
-    var xgChildren = new Array();
+    var result = [];
+    var display = [];
+    var displayed = [];
+    var xgParents = [];
+    var xgChildren = [];
     
     // first passthrough
-    for (p=0; p < casData.data.length; p++){
+    for (var p=0; p < casData.data.length; p++){
         if (String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
             //find the search term
             if(displayed.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
-                display.push(casData.data[p][0].toUpperCase())
+                display.push(casData.data[p][0].toUpperCase());
                 console.log('>>> Search term row found.');
             }
             //collect previously unseen generation-x parents of the search term
-            for (q=1; q < levels; q++){
-                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase() < 0x)){
+            for (var q=1; q < levels; q++){
+                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase() < 0)){
                     xgParents.push(String(casData.data[p][q]).toUpperCase());
                     console.log('>>> Gen-x parent found: ' + String(casData.data[p][q]));
                 }
             }
         }else{
           // if node is not search term, check if it is a generation-x child of the search term
-          for(q=1; q < levels; q++){
+          for(var q=1; q < levels; q++){
             if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && display.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
-                display.push(casData.data[p][0].toUpperCase())
+                display.push(casData.data[p][0].toUpperCase());
                 console.log('>>> Gen-q child row found: ' + casData.data[p][0].toUpperCase());
             }
           }
@@ -87,16 +87,16 @@ function updateData(casData) {
             result.push({
                 row: p
             });
-            displayed.push(thisNode_str)
+            displayed.push(thisNode_str);
             console.log('>>> Gen-q neighbour row found and displayed.');
         }
     }
     console.log('>>> List of ' + levels + '-degrees neighbours to be displayed: ' + display.length + ' items.');
     console.log('>>> List of ' + levels + '-degrees neighbours attempted to be displayed: ' + displayed.length + ' items.');
-    console.log('>>> Actual length of result array: ' result.length + ' items.');
+    console.log('>>> Actual length of result array: ' + result.length + ' items.');
     /////////////////////////////////// End of filter ///////////////////////////////////////////////////////
     //remove duplicates from results
-    uniqresult = result.filter(function (a) {
+    var uniqresult = result.filter(function (a) {
         return !this[a.row] && (this[a.row] = true);
     }, Object.create(null));
 
