@@ -29,9 +29,9 @@ function updateData(casData) {
     var company = document.getElementById("company").value,
         levels = document.getElementById("levels").value;
 
-        if (Number.isInteger(levels) !== true){
-            levels = 1;
-        }
+        // if (Number.isInteger(levels) !== true){
+        //     levels = 1;
+        // }
     // get the first column to use as autofill
     var autofill_companies =  [];
     for (var p = 0; p < casData.data.length; p++){
@@ -78,7 +78,8 @@ function updateData(casData) {
     }
     console.log('>>> List of generation-q parents: ' + xgParents.length + ' items.');
     console.log('>>> List of generation-q children: ' + xgChildren.length + ' items.');
-
+    //merge display, xgParents, and xgChildren
+    display = display.concat(xgParents, xgChildren);
     //second passthrough
     for (p=0; p < casData.data.length; p++){
       var thisNode_str = String(casData.data[p][0]).toUpperCase();
