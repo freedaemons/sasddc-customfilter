@@ -70,7 +70,7 @@ function updateData(casData) {
         // if node is not search term
           for(var q=1; q < levels; q++){
             //collect previously unseen generation-x children of the search term
-            if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && xgChildren.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
+            if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && xgChildren.indexOf(String(casData.data[p][0]).toUpperCase()) < 0){
                 xgChildren.push(casData.data[p][0].toUpperCase());
                 console.log('>>> Gen-q child row found: ' + casData.data[p][0].toUpperCase());
             }
@@ -88,14 +88,14 @@ function updateData(casData) {
       var thisNode_str = String(casData.data[p][0]).toUpperCase();
         // If this node is to be displayed, display it.
         if(display.indexOf(thisNode_str) > -1){
-            result.push({
-                row: p
-            });
-        }
-        //Since we're displaying all instances of the node, even if it's been displayed before, to capture all relationships, store the list separately
-        if(displayed.indexOf(thisNode_str) < 0){
-            displayed.push(thisNode_str);
-            console.log('>>> Gen-q neighbour row found and displayed.');
+          result.push({
+              row: p
+          });
+          //Since we're displaying all instances of the node, even if it's been displayed before, to capture all relationships, store the list separately
+          if(displayed.indexOf(thisNode_str) < 0){
+              displayed.push(thisNode_str);
+              console.log('>>> Gen-q neighbour row found and displayed.');
+          }
         }
     }
     console.log('>>> List of ' + levels + '-degrees neighbours to be displayed: ' + display.length + ' items.');
