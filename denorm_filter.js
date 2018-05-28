@@ -55,29 +55,31 @@ function updateData(casData) {
     for (var p=0; p < casData.data.length; p++){
         if (String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
             //find the search term
-            if(displayed.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
+            if(displayed.indexOf(String(casData.data[p][0]).toUpperCase()) < 0){
                 display.push(casData.data[p][0].toUpperCase());
                 console.log('>>> Search term row found.');
             }
             //collect previously unseen generation-x parents of the search term
             for (var q=1; q < levels; q++){
-                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase() < 0)){
+                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase()) < 0 && String(casData.data[p][q]).length > 0){
                     xgParents.push(String(casData.data[p][q]).toUpperCase());
-                    console.log('>>> Gen-x parent found: ' + String(casData.data[p][q]));
+                    console.log('>>> Gen-q parent found: ' + String(casData.data[p][q]));
                 }
             }
         }else{
           // if node is not search term, check if it is a generation-x child of the search term
           for(var q=1; q < levels; q++){
             if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && display.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
-                display.push(casData.data[p][0].toUpperCase());
+                xgChildren.push(casData.data[p][0].toUpperCase());
                 console.log('>>> Gen-q child row found: ' + casData.data[p][0].toUpperCase());
             }
           }
         }
     }
     console.log('>>> List of generation-q parents: ' + xgParents.length + ' items.');
+    console.log('>>> ' + xgParents.toString());
     console.log('>>> List of generation-q children: ' + xgChildren.length + ' items.');
+    console.log('>>> ' + xgChildren.toString());
     //merge display, xgParents, and xgChildren
     display = display.concat(xgParents, xgChildren);
     //second passthrough
