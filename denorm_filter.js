@@ -99,7 +99,7 @@ function updateData(casData) {
         }
     }
     console.log('>>> List of ' + levels + '-degrees neighbours to be displayed: ' + display.length + ' items.');
-    console.log('>>> List of ' + levels + '-degrees neighbours attempted to be displayed: ' + displayed.length + ' items.');
+    console.log('>>> List of unique' + levels + '-degrees neighbours displayed: ' + displayed.length + ' items.');
     console.log('>>> Actual length of result array: ' + result.length + ' items.');
     /////////////////////////////////// End of filter ///////////////////////////////////////////////////////
     //remove duplicates from results
