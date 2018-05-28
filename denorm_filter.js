@@ -45,6 +45,7 @@ function updateData(casData) {
     autocomplete(document.getElementById("company"), autofill_companies);
 
     /////////////////////////////////// Insert code to filter data here /////////////////////////////////////
+    var result = new Array();
     var displayed = new Array();
     var xgParents = new Array();
     
