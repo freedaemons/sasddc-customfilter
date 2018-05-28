@@ -53,23 +53,24 @@ function updateData(casData) {
     
     // first passthrough
     for (var p=0; p < casData.data.length; p++){
+        //find the search term
         if (String(casData.data[p][0]).toUpperCase() === company.toUpperCase()){
-            //find the search term
             if(displayed.indexOf(String(casData.data[p][0]).toUpperCase()) < 0){
                 display.push(casData.data[p][0].toUpperCase());
                 console.log('>>> Search term row found.');
             }
             //collect previously unseen generation-x parents of the search term
             for (var q=1; q < levels; q++){
-                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase()) < 0 && String(casData.data[p][q]).length > 0){
+                if(xgParents.indexOf(String(casData.data[p][q]).toUpperCase()) < 0 && String(casData.data[p][q])!== '(missing)'){
                     xgParents.push(String(casData.data[p][q]).toUpperCase());
                     console.log('>>> Gen-q parent found: ' + String(casData.data[p][q]));
                 }
             }
         }else{
-          // if node is not search term, check if it is a generation-x child of the search term
+        // if node is not search term
           for(var q=1; q < levels; q++){
-            if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && display.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
+            //collect previously unseen generation-x children of the search term
+            if(String(casData.data[p][q]).toUpperCase() === company.toUpperCase() && xgChildren.indexOf(String(casData.data[p][0]).toUpperCase() < 0)){
                 xgChildren.push(casData.data[p][0].toUpperCase());
                 console.log('>>> Gen-q child row found: ' + casData.data[p][0].toUpperCase());
             }
@@ -85,11 +86,14 @@ function updateData(casData) {
     //second passthrough
     for (p=0; p < casData.data.length; p++){
       var thisNode_str = String(casData.data[p][0]).toUpperCase();
-        // If this node is to be displayed, and has not yet been displayed, display it.
-        if(display.indexOf(thisNode_str) > -1 && displayed.indexOf(thisNode_str) < 0){
+        // If this node is to be displayed, display it.
+        if(display.indexOf(thisNode_str) > -1){
             result.push({
                 row: p
             });
+        }
+        //Since we're displaying all instances of the node, even if it's been displayed before, to capture all relationships, store the list separately
+        if(displayed.indexOf(thisNode_str) < 0){
             displayed.push(thisNode_str);
             console.log('>>> Gen-q neighbour row found and displayed.');
         }
