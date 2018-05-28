@@ -2,8 +2,6 @@
 var datatable;
 document.getElementById("company").addEventListener('change', onInputChange);
 document.getElementById("levels").addEventListener('change', onInputChange);
-// var autofill_list = ['Apple', 'Banana', 'Coffee', 'Dog', 'Elephant']
-// autocomplete(document.getElementById("company"), autofill_list);
 
 // Create event listener which takes data from VA
 function onMessage(evt) {
@@ -29,18 +27,14 @@ function updateData(casData) {
     var company = document.getElementById("company").value,
         levels = document.getElementById("levels").value;
 
-        // if (Number.isInteger(levels) !== true){
-        //     levels = 1;
-        // }
     // get the first column to use as autofill
     var autofill_companies =  [];
     for (var p = 0; p < casData.data.length; p++){
+      if(autofill_companies.indexOf(casData.data[p][0]) < 0){
         autofill_companies.push(casData.data[p][0]);
+      }
     }
     console.log('>>>autocomplete list generated: ' + autofill_companies.length + ' items.');
-    // autofill_companies = autofill_companies.filter(function (a) {
-    //     return !this[a.row] && (this[a.row] = true);
-    //     }, Object.create(null)); //remove duplicates, just in case
 
     autocomplete(document.getElementById("company"), autofill_companies);
 
@@ -102,6 +96,7 @@ function updateData(casData) {
     console.log('>>> List of unique' + levels + '-degrees neighbours displayed: ' + displayed.length + ' items.');
     console.log('>>> Actual length of result array: ' + result.length + ' items.');
     /////////////////////////////////// End of filter ///////////////////////////////////////////////////////
+    
     //remove duplicates from results
     var uniqresult = result.filter(function (a) {
         return !this[a.row] && (this[a.row] = true);
